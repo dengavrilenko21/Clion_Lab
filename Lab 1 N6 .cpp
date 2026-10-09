@@ -3,7 +3,7 @@
 #include <iostream>
 using namespace std;
 
-bool is_prime(int n) {
+bool prime_number(int n) {
     if (n < 2) return false;
     for (int j = 2; j < n; j++) {
         if (n % j == 0) {
@@ -32,7 +32,7 @@ int main() {
     int best_number = 0;
     int max_ones = 0;
     for (int i = 2; i <= n; i++) {
-        if (is_prime(i)) {
+        if (prime_number(i)) {
             int ones = count_ones(i);
 
             if (ones > max_ones) {
