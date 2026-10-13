@@ -4,8 +4,8 @@
 using namespace std;
 
 bool prime_number(int n) {
-    if(n<2) return false;
-    for (int j=2; j<n; j++) {
+    if (n < 2) return false;
+    for (int j = 2; j < n; j++) {
         if (n % j == 0) {
             return false;
         }
@@ -13,37 +13,49 @@ bool prime_number(int n) {
     return true;
 }
 
+/*Покращена версія пошуку простих чисел
+bool prime_number(int n) {
+    if (n < 2) return false;
+    for (int j = 2; j * j <= n; j++) {
+        if (n % j == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+*/
+
 int count_ones(int n) {
     int ones = 0;
-    while(n>0) {
-        if (n % 2==1) {
+    while (n > 0) {
+        if (n % 2 == 1) {
             ones++;
         }
-        n =n/2;
+        n = n / 2;
     }
     return ones;
 }
 
-int main(){
+int main() {
     int n;
     cout << "Enter number N: ";
-    cin >>n;
+    cin >> n;
 
     int best_number = 0;
     int max_ones = 0;
-    for(int i=2;i<=n;i++) {
+    for (int i = 2; i <= n; i++) {
         if (prime_number(i)) {
             int ones = count_ones(i);
 
-            if (ones>max_ones) {
+            if (ones > max_ones) {
                 max_ones = ones;
                 best_number = i;
             }
         }
     }
-    if(best_number == 0) {
+    if (best_number == 0) {
         cout << "No prime numbers found." << endl;
-    } else{
+    } else {
         cout << "Prime number: " << best_number << endl;
         cout << "Number of ones in binary: " << max_ones << endl;
     }
