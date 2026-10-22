@@ -196,8 +196,8 @@ int main() {
     cin >> s2;
 
     cout << endl << "You entered:" << endl;
-    cout << "A = " << s1 << endl;
-    cout << "B = " << s2 << endl;
+    cout << "A = " << cleanZeros(s1) << endl;
+    cout << "B = " << cleanZeros(s2) << endl;
 
 
     bool neg1 = false;
@@ -228,7 +228,6 @@ int main() {
     }
     s1 = cleanZeros(temp1);
 
-    // --- Обработка второй строки (s2) без erase и find_first_of ---
     bool neg2 = false;
     int start2 = 0;
     if (!s2.empty() && s2[0] == '-') {
