@@ -1,9 +1,15 @@
+//Реалізувати роботу з великими дійсними числами. Програма запитує користувача ввести 2 великих числа(можна ввести від’ємне),
+//програма інтерпретує введений рядок числа і зберігає його у якомусь представленні (наприклад, у масиві).
+//Програма виводить введені рядки. Додатково:
+//1) + реалізувати операцію додавання
+//a) + реалізувати операцію добутку
+//b) + реалізувати операцію ділення
+
+
 #include <iostream>
 #include <string>
 #include <algorithm>
-
 using namespace std;
-
 string cleanZeros(string s) {
     if (s.empty()) return "0";
     if (s[0] == '-') {
@@ -193,28 +199,63 @@ int main() {
     cout << "A = " << s1 << endl;
     cout << "B = " << s2 << endl;
 
+
     bool neg1 = false;
-    bool neg2 = false;
-    if (s1[0] == '-') {
+    int start1 = 0;
+    if (!s1.empty() && s1[0] == '-') {
         neg1 = true;
-        s1.erase(0, 1);
+        start1 = 1;
     }
-    if (s2[0] == '-') {
+
+    int dot1 = -1;
+    for (int i = start1; i < s1.length(); i++) {
+        if (s1[i] == '.' || s1[i] == ',') {
+            dot1 = i;
+            break;
+        }
+    }
+
+    int decimals1 = 0;
+    if (dot1 != -1) {
+        decimals1 = s1.length() - 1 - dot1;
+    }
+
+    string temp1 = "";
+    for (int i = start1; i < s1.length(); i++) {
+        if (i != dot1) {
+            temp1 += s1[i];
+        }
+    }
+    s1 = cleanZeros(temp1);
+
+    // --- Обработка второй строки (s2) без erase и find_first_of ---
+    bool neg2 = false;
+    int start2 = 0;
+    if (!s2.empty() && s2[0] == '-') {
         neg2 = true;
-        s2.erase(0, 1);
+        start2 = 1;
     }
 
-    int dot1 = s1.find_first_of(".,");
-    int dot2 = s2.find_first_of(".,");
+    int dot2 = -1;
+    for (int i = start2; i < s2.length(); i++) {
+        if (s2[i] == '.' || s2[i] == ',') {
+            dot2 = i;
+            break;
+        }
+    }
 
-    int decimals1 = (dot1 == -1) ? 0 : s1.length() - 1 - dot1;
-    int decimals2 = (dot2 == -1) ? 0 : s2.length() - 1 - dot2;
+    int decimals2 = 0;
+    if (dot2 != -1) {
+        decimals2 = s2.length() - 1 - dot2;
+    }
 
-    if (dot1 != -1) s1.erase(dot1, 1);
-    if (dot2 != -1) s2.erase(dot2, 1);
-
-    s1 = cleanZeros(s1);
-    s2 = cleanZeros(s2);
+    string temp2 = "";
+    for (int i = start2; i < s2.length(); i++) {
+        if (i != dot2) {
+            temp2 += s2[i];
+        }
+    }
+    s2 = cleanZeros(temp2);
 
     string product = multiply(s1, s2);
     cout << endl << "A * B = ";
@@ -244,7 +285,6 @@ int main() {
         printResult(subtract(addB, addA), maxDecimals, neg2);
     }
     cout << endl;
-
     cout << "A / B = ";
     if (addB == "0") {
         cout << "Division by zero is not allowed" << endl;
