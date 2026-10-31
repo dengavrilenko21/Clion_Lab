@@ -234,8 +234,8 @@ int main() {
     cin >> s2;
 
     cout << endl << "You entered:" << endl;
-    cout << "A = " << s1 << endl;
-    cout << "B = " << s2 << endl;
+    cout << "A = " << cleanZeros(s1) << endl;
+    cout << "B = " << cleanZeros(s2) << endl;
 
         BigNumber num1 = parseNumber(s1);
         BigNumber num2 = parseNumber(s2);
