@@ -10,6 +10,14 @@
 #include <string>
 #include <algorithm>
 using namespace std;
+
+struct BigNumber {
+    string digits;
+    int decimals;
+    bool isNegative;
+};
+
+
 string cleanZeros(string s) {
     if (s.empty()) return "0";
     if (s[0] == '-') {
@@ -46,9 +54,39 @@ string cleanZeros(string s) {
     while (k < s.length()  && s[k] == '0') {
         k++;
     }*/
+}
+BigNumber parseNumber(string s) {
+    BigNumber num;
+    num.isNegative = false;
+    num.decimals = 0;
 
+    int start = 0;
+    if (!s.empty() && s[0] == '-') {
+        num.isNegative = true;
+        start = 1;
+    }
 
+    int dot = -1;
+    for (int i = start; i < s.length(); i++) {
+        if (s[i] == '.' || s[i] == ',') {
+            dot = i;
+            break;
+        }
+    }
 
+    if (dot != -1) {
+        num.decimals = s.length() - 1 - dot;
+    }
+
+    string temp = "";
+    for (int i = start; i < s.length(); i++) {
+        if (i != dot) {
+            temp += s[i];
+        }
+    }
+
+    num.digits = cleanZeros(temp);
+    return num;
 }
 bool Greater_or_Equals(string a, string b) {
     if (a.length() != b.length()) {
@@ -199,8 +237,11 @@ int main() {
     cout << "A = " << s1 << endl;
     cout << "B = " << s2 << endl;
 
+        BigNumber num1 = parseNumber(s1);
+        BigNumber num2 = parseNumber(s2);
 
-    bool neg1 = false;
+    //те що показував , замінив на функцію
+    /*bool neg1 = false;
     int start1 = 0;
     if (!s1.empty() && s1[0] == '-') {
         neg1 = true;
@@ -228,7 +269,6 @@ int main() {
     }
     s1 = cleanZeros(temp1);
 
-    // --- Обработка второй строки (s2) без erase и find_first_of ---
     bool neg2 = false;
     int start2 = 0;
     if (!s2.empty() && s2[0] == '-') {
@@ -255,36 +295,37 @@ int main() {
             temp2 += s2[i];
         }
     }
-    s2 = cleanZeros(temp2);
+    s2 = cleanZeros(temp2);*/
 
-    string product = multiply(s1, s2);
+    string product = multiply(num1.digits, num2.digits);
     cout << endl << "A * B = ";
-    printResult(product, decimals1 + decimals2, neg1 != neg2);
+    printResult(product, num1.decimals + num2.decimals, num1.isNegative != num2.isNegative);
     cout << endl;
 
-    string addA = s1;
-    string addB = s2;
-    int maxDecimals = max(decimals1, decimals2);
+    string addA = num1.digits;
+    string addB = num2.digits;
+    int maxDecimals = max(num1.decimals, num2.decimals);
 
-    if (decimals1 < maxDecimals) {
-        addA.append(maxDecimals - decimals1, '0');
+    if (num1.decimals < maxDecimals) {
+        addA.append(maxDecimals - num1.decimals, '0');
     }
-    if (decimals2 < maxDecimals) {
-        addB.append(maxDecimals - decimals2, '0');
+    if (num2.decimals < maxDecimals) {
+        addB.append(maxDecimals - num2.decimals, '0');
     }
 
     addA = cleanZeros(addA);
     addB = cleanZeros(addB);
 
     cout << "A + B = ";
-    if (neg1 == neg2) {
-        printResult(add(addA, addB), maxDecimals, neg1);
+    if (num1.isNegative == num2.isNegative) {
+        printResult(add(addA, addB), maxDecimals, num1.isNegative);
     } else if (Greater_or_Equals(addA, addB)) {
-        printResult(subtract(addA, addB), maxDecimals, neg1);
+        printResult(subtract(addA, addB), maxDecimals, num1.isNegative);
     } else {
-        printResult(subtract(addB, addA), maxDecimals, neg2);
+        printResult(subtract(addB, addA), maxDecimals, num2.isNegative);
     }
     cout << endl;
+
     cout << "A / B = ";
     if (addB == "0") {
         cout << "Division by zero is not allowed" << endl;
@@ -302,7 +343,7 @@ int main() {
         divResult += "." + fractional;
     }
 
-    if (neg1 != neg2 && divResult != "0") {
+    if (num1.isNegative != num2.isNegative && divResult != "0") {
         cout << "-";
     }
     cout << divResult << endl;
