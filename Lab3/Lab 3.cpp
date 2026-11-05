@@ -35,7 +35,7 @@ bool point_in_triangle(Point p, Point a, Point b, Point c) {
      create_point(20, 10),
      create_point(3, 42)
  };
-    int max_points = -1;
+    int max_points = 0;
     Point bestA, bestB, bestC;
     int n = sizeof(points) / sizeof(points[0]);
     for (int i = 0; i < n; i++) {
@@ -59,15 +59,14 @@ bool point_in_triangle(Point p, Point a, Point b, Point c) {
         }
     }
 
-    if (max_points == -1) {
+    if (max_points == 0) {
         cout << "All points lie on a straight line." << endl;
     } else {
-        cout << "Best triangle vertices:" << endl;
-        cout << "A(" << bestA.x << "," << bestA.y << ")" << endl;
+        cout << "Triangle:" << endl<< "A(" << bestA.x << "," << bestA.y << ")" << endl;
         cout << "B(" << bestB.x << "," << bestB.y << ")" << endl;
         cout << "C(" << bestC.x << "," << bestC.y << ")" << endl;
         cout << "Max points inside the tringle: " << max_points << endl;
     }
-    cout << n << endl;
+
     return 0;
  }
