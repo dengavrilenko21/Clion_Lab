@@ -16,7 +16,7 @@ int main() {
     cout << "My function: " << res_exp  <<endl;;
     cout << "Standard cmath: " << std_exp << endl << endl;;
     double my_chx = chx(x, eps);
-    double std_chx = cosh(x);
+    double std_chx = std::cosh(x);
 
     cout << "ch(x):"<<endl;;
     cout << "Epsilon: " << eps << endl;
