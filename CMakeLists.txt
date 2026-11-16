@@ -10,6 +10,9 @@ add_executable(Lab2 "Lab2/Lab 2 .cpp")
 add_executable(Lab3 "Lab3/Lab 3.cpp")
 add_executable(Lab4 "Lab4/Lab 4.cpp"
         "Lab4/functions.h")
+add_executable(Lab5 "Lab5/Lab 5.cpp"
+        Lab5/stb_image.h
+        Lab5/stb_image_write.h)
 add_executable(Modular_V3_1 "Modular 1/modular V3 1.cpp")
 add_executable(Modular_V3_2 "Modular 1/modular V3 2.cpp")
 add_executable(Modular_V3_3 "Modular 1/modular V3 3.cpp")
